@@ -1,0 +1,203 @@
+<div>
+  <nav class="navbar navbar-default navbar-static-top">
+    <a href="#" class="navbar-brand">Biblioteca</a>
+    <div class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a routerLink="tutorials" class="nav-link">Lista carti</a>
+      </li>
+      
+        <li class="nav-item">
+          <div *ngIf="loggedin">
+          <a routerLink="add" class="nav-link">Adauga</a>
+        </div>
+        </li>
+        <li class="nav-item">
+          <div *ngIf="loggedin">
+            <p> Bun venit in biblioteca ta, {{user.name}}!</p> 
+          </div>
+        </li>
+       
+      <li class="nav-item">
+        <div *ngIf="!loggedin">
+          <button class="btn btn-primary" (click)="openModal(login)">Autentifica-te</button>
+       
+        </div>
+
+        <div *ngIf="loggedin">
+          <button class="btn btn-primary" (click)="logOut(logout)">Delogheaza-te</button>     
+        </div>
+      </li>
+    </div>
+  </nav>
+
+  <div class="container mt-3">
+    <router-outlet></router-outlet>
+  </div>
+
+  <ng-template #login>
+    <div class="modal-header">
+
+      <!-- Modal Title -->
+      <h4 class="modal-title pull-left">Introdu datele</h4>
+
+      <!-- Close Button -->
+      <button type="button" class="close pull-right" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="modal-body">
+
+      <div class="submit-form">
+        <br>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input
+                type="text"
+                class="form-control"
+                id="email"
+                required
+                [(ngModel)]="user.email"
+                name="email"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="password">Parola</label>
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                required
+                [(ngModel)]="user.password"
+                name="password"
+              />
+            </div>
+            <br>
+            <button (click)="logIn(eroareParola, eroareEmail)" class="btn btn-success">Autentifica-te</button>
+
+            <button class="btn btn-primary" (click)="retry(signup)">Inregistrare</button>  
+          </div>
+        </div>
+  </ng-template> 
+
+
+  <ng-template #signup>
+    <div class="modal-header">
+
+      <!-- Modal Title -->
+      <h4 class="modal-title pull-left">Inregistreaza-te</h4>
+
+      <!-- Close Button -->
+      <button type="button" class="close pull-right" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="modal-body">
+
+      <div class="submit-form">
+        <br>
+            <div class="form-group">
+              <label for="name">Numele</label>
+              <input
+                type="text"
+                class="form-control"
+                id="name"
+                required
+                [(ngModel)]="user.name"
+                name="title"
+              />
+            </div>
+        
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                required
+                [(ngModel)]="user.email"
+                name="email"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="password">Parola</label>
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                required
+                [(ngModel)]="user.password"
+                name="password"
+              />
+            </div>
+            <br>
+            <button (click)="signUp()" class="btn btn-success">Salveaza</button>
+
+        </div>
+  
+      
+    </div>
+   </ng-template>
+
+
+  <ng-template #logout>
+    <div class="modal-header">
+
+      <!-- Modal Title -->
+      <h4 class="modal-title pull-left">Te-ai delogat!</h4>
+
+      <!-- Close Button -->
+      <button type="button" class="close pull-right" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="modal-body">     
+      
+    </div>
+  </ng-template>   
+  <ng-template #eroareParola>
+    <div class="modal-header">
+
+      <!-- Modal Title -->
+      <h4 class="modal-title pull-left">Oops. Parola gresita. Reincearca.</h4>
+
+      <!-- Close Button -->
+      <button type="button" class="close pull-right" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="modal-body">     
+      <button class="btn btn-primary" (click)="retry(login)">Reincearca autentificarea</button>
+    </div>
+  </ng-template> 
+
+  <ng-template #eroareEmail>
+    <div class="modal-header">
+
+      <!-- Modal Title -->
+      <h4 class="modal-title pull-left">Oops. Contul nu exita. Reincearca sau creeaza cont.</h4>
+
+      <!-- Close Button -->
+      <button type="button" class="close pull-right" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="modal-body">     
+      <button class="btn btn-primary" (click)="retry(login)">Reincearca autentificarea</button>
+      <button class="btn btn-primary" (click)="retry(signup)">Creeaza cont</button>
+    </div>
+  </ng-template> 
+
+
+</div>

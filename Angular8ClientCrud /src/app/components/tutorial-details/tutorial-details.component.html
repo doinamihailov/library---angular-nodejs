@@ -1,0 +1,61 @@
+<div *ngIf="currentTutorial" class="edit-form">
+  <br>
+  <br>
+    <h4>Editare carte</h4>
+    <form>
+      <div class="form-group">
+        <label for="title">Titlul</label>
+        <input
+          type="text"
+          class="form-control"
+          id="title"
+          [(ngModel)]="currentTutorial.title"
+          name="title"
+        />
+      </div>
+      <div class="form-group">
+        <label for="description">Descrierea</label>
+        <input
+          type="text"
+          class="form-control"
+          id="description"
+          [(ngModel)]="currentTutorial.description"
+          name="description"
+        />
+      </div>
+  
+      <div class="form-group">
+        <label><strong>Status:</strong></label>
+        {{ currentTutorial.published ? "Publicat" : "In asteptare" }}
+      </div>
+    </form>
+  
+    <button
+      class="badge badge-primary mr-2"
+      *ngIf="currentTutorial.published"
+      (click)="updatePublished(false)"
+    >
+      Scoate-o din publicare
+    </button>
+    <button
+      *ngIf="!currentTutorial.published"
+      class="badge badge-primary mr-2"
+      (click)="updatePublished(true)"
+    >
+      Publicare
+    </button>
+  
+    <button class="badge badge-danger mr-2" (click)="deleteTutorial()">
+      Sterge
+    </button>
+  
+    <button type="submit" class="badge badge-success" (click)="updateTutorial()">
+      Editeaza
+    </button>
+    <p>{{ message }}</p>
+  </div>
+  
+  <div *ngIf="!currentTutorial">
+    <br />
+    <p>Cartea nu exista!</p>
+  </div>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+  <div class="container">
+    
+    <div class="list row">
+      <div class="col-md-8">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="Cauta dupa titlu" [(ngModel)]="title" />
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button" (click)="searchTitle()">
+              Cauta
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <h4>Lista de carti</h4>
+        <table class="table">
+          <tr>
+            <th>#</th>
+            <th> Id</th>
+            <th> Titlul</th>
+            <th> Descriere</th>
+            <th> Stare publicare</th>
+            <th> Data crearii</th>
+            <th> Data actualizarii</th>
+            <th> Editeaza cartea</th>
+            <th> Sterge cartea</th>
+          </tr>
+          <tr class="rows" *ngFor="let tutorial of tutorials; let i = index" [class.active]="i == currentIndex"
+            (click)="setActiveTutorial(tutorial, i)">
+
+            <td>{{i}}</td>
+
+            <td> {{tutorial.id}}</td>
+            <td> {{tutorial.title }}</td>
+            <td> {{tutorial.description}}</td>
+            <td> {{tutorial.published}}</td>
+            <td> {{tutorial.createdAt}}</td>
+            <td> {{tutorial.updatedAt}}</td>
+            <td>
+              <a class="btn btn-success pull-right" href="/tutorials/{{tutorial.id}}">
+                Separat
+              </a>
+              
+              <button class="btn btn-primary" (click)="openModal(template)">Aici</button>
+
+              <ng-template #template>
+                <div class="modal-header">
+
+                  <!-- Modal Title -->
+                  <h4 class="modal-title pull-left">Editeaza cartea {{tutorial.title}}</h4>
+
+                  <!-- Close Button -->
+                  <button type="button" class="close pull-right" (click)="modalRef.hide()">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="modal-body">
+              
+                  <form>
+                    <div class="form-group">
+                      <label for="title">Titlul</label>
+                      <input type="text" class="form-control" id="title" [(ngModel)]="currentTutorial.title"
+                        name="title" />
+                    </div>
+                    <div class="form-group">
+                      <label for="description">Descrierea</label>
+                      <input type="text" class="form-control" id="description" [(ngModel)]="currentTutorial.description"
+                        name="description" />
+                    </div>
+
+                    <div class="form-group">
+                      <label><strong>Status:</strong></label>
+                      {{ currentTutorial.published ? "Publicat" : "In asteptare" }}
+                    </div>
+
+                    <button class="badge badge-primary mr-2" *ngIf="currentTutorial.published"
+                      (click)="updatePublished(false)">
+                      Scoate-o din publicare
+                    </button>
+                    <button *ngIf="!currentTutorial.published" class="badge badge-primary mr-2"
+                      (click)="updatePublished(true)">
+                      Publicare
+                    </button>
+
+                    <button type="submit" class="badge badge-success" (click)="updateTutorial()">
+                      Editeaza
+                    </button>
+
+                  </form>
+                </div>
+              </ng-template>
+
+            </td>
+            <td>
+              <button class="m-3 btn btn-sm btn-danger" (click)="removeCurrentTutorial(tutorial.id)">
+                X
+              </button>
+            </td>
+
+          </tr>
+        </table>
+        <button class="m-3 btn btn-sm btn-danger" (click)="removeAllTutorials()">
+          Sterge tot
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+</body>
+
+</html>
